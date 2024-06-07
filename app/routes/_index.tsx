@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import Navbar from "./navbar";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,7 +11,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div>
-      <h1 className="">Hello</h1>
+      <Navbar />
     </div>
   );
 }
