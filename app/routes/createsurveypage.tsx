@@ -12,22 +12,58 @@ export async function loader() {
 }
 
 let questionSet: string[] = [];
+//let prismaQuestionSet = [];
 
 export async function action({ request }: ActionFunctionArgs) {
-  const question = await request.formData();
-  questionSet.push(question.get("questionbar")?.toString() || "");
-  console.log(questionSet);
+  const data = await request.formData();
 
-  let text1 = question.get("questionbar").toString();
+  const addQuestionButton = data.get("addQ");
+  const questionInBar = data.get("questionbar");
+  const submitFormButton = data.get("submitF");
+
+  console.log("********Question Button *******");
+  console.log(addQuestionButton === null);
+  console.log("********Question Button *******");
+
+  console.log("********Submit Form*******");
+  console.log(submitFormButton === null);
+  console.log("********Submit Form*******");
+
+  console.log(questionInBar);
+
+  //USER PRESSED SUBMIT FORM
+  if (addQuestionButton === null) {
+    questionSet = [];
+    await prisma.survey.create({
+      data: {
+        questions: prismaQuestionSet,
+      },
+    });
+  }
+
+  //USER PRESSED ADD QUESTION
+  if (submitFormButton === null) {
+    const question = data.get("questionbar").toString();
+    questionSet.push(question);
+    const prismaQ = await prisma.question.create({
+      data: {
+        text: question,
+      },
+    });
+    //prismaQuestionSet.push(prismaQ);
+    console.log(questionSet);
+  }
+
+  return null;
+}
+
+/*let text1 = data.get("questionbar").toString();
 
   await prisma.question.create({
     data: {
       text: text1,
     },
-  });
-
-  return null;
-}
+  }); */
 
 async function addSurvey() {
   console.log(questionSet);
@@ -38,12 +74,6 @@ async function addSurvey() {
       },
     })
   );
-
-  prisma.survey.create({
-    data: {
-      questions: prismaQuestions,
-    },
-  });
 
   //reset questionSet
   questionSet = [];
@@ -64,13 +94,17 @@ export default function createsurveypage() {
             placeholder="Type here"
             className="input input-bordered w-full max-w-xs "
           />
-          <button className="btn" type="submit">
+          <button className="btn" name="addQ" type="submit">
             Add Question
           </button>
+          <button
+            className="btn flex flex-row"
+            name="submitF"
+            onClick={addSurvey}
+          >
+            Submit Form
+          </button>
         </Form>
-        <button className="btn flex flex-row" onClick={addSurvey}>
-          Submit Form
-        </button>
       </div>
     </div>
   );

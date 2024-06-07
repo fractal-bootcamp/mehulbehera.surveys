@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 import Navbar from "./navbar";
 
 export const meta: MetaFunction = () => {
