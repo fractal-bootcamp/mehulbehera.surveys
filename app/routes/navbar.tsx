@@ -5,10 +5,10 @@ function Navbar() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a href="surveylistpage">Survey List</a>
+            <a href="/surveylistpage">Survey List</a>
           </li>
           <li>
-            <a href="createsurveypage">Create Survey</a>
+            <a href="/createsurveypage">Create Survey</a>
           </li>
         </ul>
       </div>

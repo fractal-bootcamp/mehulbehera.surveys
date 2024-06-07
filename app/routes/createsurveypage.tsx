@@ -14,6 +14,7 @@ export async function loader() {
 let questionSet: string[] = [];
 //let prismaQuestionSet = [];
 
+/* Change page so when someone clicks create survey create a new prisma survey and add questions here */
 export async function action({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
@@ -78,6 +79,8 @@ async function addSurvey() {
   //reset questionSet
   questionSet = [];
 }
+
+/*Add UseState to redo add questions on the page */
 
 export default function createsurveypage() {
   const data = useLoaderData<typeof loader>();

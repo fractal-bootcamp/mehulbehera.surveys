@@ -1,5 +1,3 @@
-import { Prisma } from "@prisma/client";
-import { json } from "@remix-run/node"; // or cloudflare/deno
 import { useLoaderData } from "@remix-run/react";
 import { prisma } from "../client";
 import Navbar from "./navbar";
@@ -31,11 +29,12 @@ function SurveyList() {
         <Navbar />
       </div>
 
-      <ul>
+      <ul className="h-screen flex flex-col items-center justify-center">
         {surveysToPrint.map((survey) => (
           <li key={survey.id}>
-            {survey.id.toString() +
-              survey.questions.map((question) => question.text)}
+            <a href={`/survey/${survey.id}`} className="btn ">
+              Survey {survey.id}
+            </a>
           </li>
         ))}
       </ul>
