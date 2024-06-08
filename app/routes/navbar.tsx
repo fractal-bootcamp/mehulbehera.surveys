@@ -1,3 +1,19 @@
+import { prisma } from "../client";
+
+let id = 0;
+
+async function createSurveyInDatabase() {
+  console.log("ran before");
+  const newSurvey = await prisma.survey.create({
+    data: {},
+  });
+
+  id = newSurvey.id;
+  console.log("ran after");
+  console.log(id);
+  console.log(newSurvey);
+}
+
 function Navbar() {
   return (
     <div className="navbar bg-base-100">

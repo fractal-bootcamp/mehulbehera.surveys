@@ -21,8 +21,8 @@ model Survey {
 model Question {
   id        String     @id @default(uuid())
   text      String
-  Survey    Survey?    @relation(fields: [surveyId], references: [id])
-  surveyId  Int?
+  Survey    Survey     @relation(fields: [surveyId], references: [id])
+  surveyId  Int
   responses Response[]
 }
 
