@@ -6,6 +6,7 @@ import { prisma } from "../client";
 import Navbar from "./navbar";
 import { Prisma } from "@prisma/client";
 import SurveyList from "./surveylistpage";
+import { useState } from "react";
 
 export async function loader() {
   return null;
@@ -32,7 +33,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
   console.log(questionInBar);
 
-  //USER PRESSED SUBMIT FORM
+  //USER PRESSED SUBMIT FORM - TAKE USER TO SUCCESS PAGE
   if (addQuestionButton === null) {
     questionSet = [];
     await prisma.survey.create({
@@ -84,6 +85,7 @@ async function addSurvey() {
 
 export default function createsurveypage() {
   const data = useLoaderData<typeof loader>();
+  const [questions, setQuestion] = useState([]);
   return (
     <div>
       <div>
@@ -97,17 +99,18 @@ export default function createsurveypage() {
             placeholder="Type here"
             className="input input-bordered w-full max-w-xs "
           />
-          <button className="btn" name="addQ" type="submit">
+          <button className="btn" name="addQ" type="submit" onClick={...questions, }>
             Add Question
           </button>
-          <button
-            className="btn flex flex-row"
-            name="submitF"
-            onClick={addSurvey}
-          >
+          <button className="btn flex flex-row" name="submitF" >
             Submit Form
           </button>
         </Form>
+      </div>
+      <div>
+        {questions.map((question) => (
+          <div>{question.text}</div>
+        ))}
       </div>
     </div>
   );
